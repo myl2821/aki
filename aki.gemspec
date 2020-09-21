@@ -1,4 +1,5 @@
 require_relative 'lib/aki/version'
+require_relative 'lib/aki'
 
 Aki::GemSpec ||= Gem::Specification.new do |spec|
   spec.name          = "aki"
