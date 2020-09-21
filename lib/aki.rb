@@ -12,6 +12,8 @@ require 'uri'
 LOGGER = Logger.new STDOUT
 
 module Aki
+  VERSION = '0.1.0'
+
   class Connection
     def initialize socket, app
       @socket = socket
