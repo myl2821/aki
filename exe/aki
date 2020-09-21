@@ -1,3 +1,12 @@
 #!/usr/bin/env ruby
 
 require "aki"
+
+app, _ = Rack::Builder.parse_file 'config.ru'
+
+#server = Tube.new app, 3000
+#server.prefork 4
+#server.run
+
+server = Aki::EMServer.new 3000, app
+server.run
