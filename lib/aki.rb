@@ -19,9 +19,9 @@ module Aki
 
       send_data "HTTP/1.1 #{status}\r\n"
 
-      trunked = false
+      chunked = false
       if headers['Content-Length'].nil?
-        trunked = true
+        chunked = true
         headers['Transfer-Encoding'] = 'chunked'
       end
 
@@ -31,7 +31,7 @@ module Aki
       send_data "\r\n"
 
       body.each do |chunk|
-        if trunked
+        if chunked 
           chunk_size = chunk.bytesize.to_s 16
           send_data "#{chunk_size}\r\n"
           send_data chunk
@@ -41,7 +41,7 @@ module Aki
         end
       end
 
-      if trunked
+      if chunked 
         send_data "0\r\n\r\n"
       end
 
