@@ -1,5 +1,7 @@
-require_relative 'lib/aki/version'
-require_relative 'lib/aki'
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'aki/version'
 
 Aki::GemSpec ||= Gem::Specification.new do |spec|
   spec.name          = "aki"
