@@ -69,6 +69,7 @@ module Aki
       url = @parser.request_url
       request_path, query_string = url.split '?', 2
       env["SERVER_NAME"] = 'localhost'
+      env["SCRIPT_NAME"] = ''
       env["PATH_INFO"] = request_path
       env["REQUEST_METHOD"] = @parser.http_method
       env["QUERY_STRING"] = query_string || ""
