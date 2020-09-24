@@ -31,7 +31,7 @@ module Aki
       send_data "\r\n"
 
       body.each do |chunk|
-        if chunked 
+        if chunked
           chunk_size = chunk.bytesize.to_s 16
           send_data "#{chunk_size}\r\n"
           send_data chunk
@@ -41,7 +41,7 @@ module Aki
         end
       end
 
-      if chunked 
+      if chunked
         send_data "0\r\n\r\n"
       end
 
@@ -68,12 +68,19 @@ module Aki
 
       url = @parser.request_url
       request_path, query_string = url.split '?', 2
-      env["SERVER_NAME"] = 'localhost'
+
+      unless @headers['Host'].nil?
+        server_name, port = @headers['Host'].split(':')
+      end
+      server_name ||= 'localhost'
+      port ||= '80'
+
+      env["SERVER_NAME"] = server_name
       env["SCRIPT_NAME"] = ''
       env["PATH_INFO"] = request_path
       env["REQUEST_METHOD"] = @parser.http_method
       env["QUERY_STRING"] = query_string || ""
-      env["SERVER_PORT"] = '3000'
+      env["SERVER_PORT"] = port
       env["rack.version"] = Rack::VERSION
       env["rack.input"] = StringIO.new @body
       env["rack.errors"] = StringIO.new
